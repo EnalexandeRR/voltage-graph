@@ -1,7 +1,7 @@
-let minVinput = document.querySelector("#minV");
-let maxVinput = document.querySelector("#maxV");
-minVinput.value = 180;
-maxVinput.value = 260;
+let minVinput = document.querySelector('#minV');
+let maxVinput = document.querySelector('#maxV');
+minVinput.value = 205;
+maxVinput.value = 253;
 
 function DrawGraph(data) {
   am5.ready(function () {
@@ -19,7 +19,7 @@ function DrawGraph(data) {
 
     // Create root element
     // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-    var root = am5.Root.new("chartdiv");
+    var root = am5.Root.new('chartdiv');
 
     // Set themes
     // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -31,17 +31,17 @@ function DrawGraph(data) {
       am5xy.XYChart.new(root, {
         panX: true,
         panY: true,
-        wheelX: "panX",
-        wheelY: "zoomX",
+        wheelX: 'panX',
+        wheelY: 'zoomX',
         pinchZoomX: true,
-      })
+      }),
     );
 
     // Add cursor
     // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
-    var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
-    cursor.lineX.set("forceHidden", true);
-    cursor.lineY.set("forceHidden", true);
+    var cursor = chart.set('cursor', am5xy.XYCursor.new(root, {}));
+    cursor.lineX.set('forceHidden', true);
+    cursor.lineY.set('forceHidden', true);
 
     // Generate random data
     var date = new Date();
@@ -57,7 +57,7 @@ function DrawGraph(data) {
       if (value > 100) {
         value = 100 - Math.random() * 10;
       }
-      am5.time.add(date, "day", 1);
+      am5.time.add(date, 'day', 1);
       return {
         date: date.getTime(),
         value: value,
@@ -77,32 +77,32 @@ function DrawGraph(data) {
     var xAxis = chart.xAxes.push(
       am5xy.DateAxis.new(root, {
         baseInterval: {
-          timeUnit: "second",
+          timeUnit: 'second',
           count: 1,
         },
         renderer: am5xy.AxisRendererX.new(root, {}),
-      })
+      }),
     );
 
     var yAxis = chart.yAxes.push(
       am5xy.ValueAxis.new(root, {
         renderer: am5xy.AxisRendererY.new(root, {}),
-      })
+      }),
     );
 
     // Add series
     // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
     var series = chart.series.push(
       am5xy.LineSeries.new(root, {
-        name: "Series",
+        name: 'Series',
         xAxis: xAxis,
         yAxis: yAxis,
-        valueYField: "value",
-        valueXField: "date",
+        valueYField: 'value',
+        valueXField: 'date',
         tooltip: am5.Tooltip.new(root, {
-          labelText: "{valueY}",
+          labelText: '{valueY}',
         }),
-      })
+      }),
     );
 
     series.fills.template.setAll({
@@ -113,10 +113,10 @@ function DrawGraph(data) {
     // Add scrollbar
     // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
     chart.set(
-      "scrollbarX",
+      'scrollbarX',
       am5.Scrollbar.new(root, {
-        orientation: "horizontal",
-      })
+        orientation: 'horizontal',
+      }),
     );
 
     // Set data
@@ -126,7 +126,7 @@ function DrawGraph(data) {
     // series.data.setAll(data);
 
     var rangeDate = new Date();
-    am5.time.add(rangeDate, "day", Math.round(series.dataItems.length / 2));
+    am5.time.add(rangeDate, 'day', Math.round(series.dataItems.length / 2));
     var rangeTime = rangeDate.getTime();
 
     // add series range
@@ -144,41 +144,41 @@ function DrawGraph(data) {
     });
 
     // seriesRange.fills.template.set("fill", am5.color(0xff0000));
-    seriesRange.strokes.template.set("stroke", am5.color(0xff0000));
-    seriesRangeLow.fills.template.set("fill", am5.color(0xff0000));
-    seriesRangeLow.strokes.template.set("stroke", am5.color(0xff0000));
+    seriesRange.strokes.template.set('stroke', am5.color(0xff0000));
+    seriesRangeLow.fills.template.set('fill', am5.color(0xff0000));
+    seriesRangeLow.strokes.template.set('stroke', am5.color(0xff0000));
 
-    seriesRangeDataItem.get("grid").setAll({
+    seriesRangeDataItem.get('grid').setAll({
       strokeOpacity: 1,
       visible: true,
       stroke: am5.color(0xff0000),
       strokeDasharray: [2, 2],
     });
 
-    seriesRangeDataItem.get("label").setAll({
+    seriesRangeDataItem.get('label').setAll({
       location: 0,
       visible: true,
-      text: "Max V",
+      text: 'Max V',
       inside: true,
       centerX: 0,
       centerY: am5.p100,
-      fontWeight: "bold",
+      fontWeight: 'bold',
     });
-    seriesRangeDataItemLow.get("grid").setAll({
+    seriesRangeDataItemLow.get('grid').setAll({
       strokeOpacity: 1,
       visible: true,
       stroke: am5.color(0xff0000),
       strokeDasharray: [1, 2],
     });
 
-    seriesRangeDataItemLow.get("label").setAll({
+    seriesRangeDataItemLow.get('label').setAll({
       location: 0.002,
       visible: true,
-      text: "Min V",
+      text: 'Min V',
       inside: true,
       centerX: 0,
       centerY: am5.p100,
-      fontWeight: "bold",
+      fontWeight: 'bold',
     });
 
     // Make stuff animate on load
@@ -189,18 +189,18 @@ function DrawGraph(data) {
   });
 }
 
-document.getElementById("inputfile").addEventListener("change", function () {
+document.getElementById('inputfile').addEventListener('change', function () {
   let fr = new FileReader();
 
   fr.onload = function () {
     data = [];
-    linesArray = fr.result.split("\n");
+    linesArray = fr.result.split('\n');
     linesArray.forEach((element) => {
-      let correctedLocalDate = `${element.split("|")[0].slice(3, 5)}/${element
-        .split("|")[0]
-        .slice(0, 2)}${element.split("|")[0].slice(5)}`;
-      let localDate = toTimestamp(`${correctedLocalDate} ${element.split("|")[1]}`);
-      let value = Number(`${element.split("|")[2]}`);
+      let correctedLocalDate = `${element.split('|')[0].slice(3, 5)}/${element
+        .split('|')[0]
+        .slice(0, 2)}${element.split('|')[0].slice(5)}`;
+      let localDate = toTimestamp(`${correctedLocalDate} ${element.split('|')[1]}`);
+      let value = Number(`${element.split('|')[2]}`);
       if (element.length) {
         data.push({
           date: localDate,
